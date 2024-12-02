@@ -8,7 +8,14 @@ struct StreamingMarkdownView: View {
     @State private var timer: Timer?
     @State private var isStreaming = false
     
-    init(text: String, speed: TimeInterval = 0.03) {
+    // Add suggestions state
+    @State private var suggestions: [String] = [
+        "Tell me more about systolic pressure",
+        "What are the best ways to reduce blood pressure?",
+        "How often should I check my blood pressure?"
+    ]
+    
+    init(text: String, speed: TimeInterval = 0.0002) {
         self.text = text
         self.speed = speed
     }
@@ -33,22 +40,35 @@ struct StreamingMarkdownView: View {
     }
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: true) {
-            Text.markdown(displayedText)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(.systemGray6))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.blue.opacity(isStreaming ? 0.6 : 0), lineWidth: 2)
-                                .scaleEffect(isStreaming ? 1.02 : 1.0)
-                        )
+        VStack(spacing: 0) {
+            ScrollView(.vertical, showsIndicators: true) {
+                Text.markdown(displayedText)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(.systemGray6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.blue.opacity(isStreaming ? 0.6 : 0), lineWidth: 2)
+                                    .scaleEffect(isStreaming ? 1.02 : 1.0)
+                            )
+                    )
+                    .padding()
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .animation(.easeInOut, value: displayedText)
+            }
+            
+            // Add suggestions view with enhanced animation
+            if !isStreaming {
+                SuggestionsView(
+                    suggestions: suggestions,
+                    onSuggestionTapped: { suggestion in
+                        print("Selected suggestion: \(suggestion)")
+                    }
                 )
-                .padding()
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .animation(.easeInOut, value: displayedText)
+                .transition(.opacity.animation(.easeInOut(duration: 0.5)))
+            }
         }
         .onAppear {
             startStreaming()

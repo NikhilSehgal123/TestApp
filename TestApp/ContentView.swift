@@ -10,7 +10,7 @@ import Foundation
 
 struct ContentView: View {
     let markdownText = """
-# Understanding Blood Pressure 🫀\n\nBlood pressure is a **vital sign** that measures the force of blood pushing against your artery walls. It consists of two numbers:\n\n* **Systolic pressure** (top number)\n* **Diastolic pressure** (bottom number)\n\n## Normal Blood Pressure Ranges 📊\n\nA healthy blood pressure reading is typically:\n* Systolic: 90-120 mmHg\n* Diastolic: 60-80 mmHg\n\n## Risk Factors ⚠️\n\nCommon factors that can affect blood pressure:\n1. Age\n2. Diet\n3. Exercise\n4. Stress levels\n5. Family history\n\n_Remember to check your blood pressure regularly and consult healthcare professionals for guidance._\n\n**Tips for Maintenance:**\n* Reduce salt intake\n* Exercise regularly\n* Maintain healthy weight\n* Limit alcohol\n* Get adequate sleep
+# Understanding Blood Pressure 🫀\n\nBlood pressure is a **vital sign** that measures the force of blood pushing against your artery walls. It consists of two numbers:\n\n* **Systolic pressure** (top number)\n* **Diastolic pressure** (bottom number)
 """
     
     var body: some View {
